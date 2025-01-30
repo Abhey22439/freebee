@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script>
+        // Get URL parameters
+        let urlParams = new URLSearchParams(window.location.search);
+        let step1 = urlParams.get('step1');
+        let step2 = urlParams.get('step2');
+
+        // Log retrieved URLs
+        console.log("Step 1 URL:", step1);
+        console.log("Step 2 URL:", step2);
+
+        // Validate URLs
+        if (!step1 || !step2) {
+            console.error("Error: Missing step1 or step2 in the query string");
+            alert("Error: Missing required URL parameters.");
+            document.body.innerHTML = "<h3 style='color: red;'>Error: Missing step1 or step2 in the URL.</h3>";
+            throw new Error("Redirect failed due to missing parameters.");
+        }
+
+        // Retrieve click count from localStorage
+        let clicks = parseInt(localStorage.getItem('clicks')) || 0;
+        console.log("Click count before increment:", clicks);
+
+        // Increment click count
+        clicks++;
+        localStorage.setItem('clicks', clicks);
+        console.log("Click count after increment:", clicks);
+
+        // Redirect logic
+        let redirectURL = (clicks % 2 !== 0) ? step1 : step2;
+        console.log("Redirecting to:", redirectURL);
+
+        // Perform redirection
+        setTimeout(() => {
+            window.location.href = redirectURL;
+        }, 1500); // Short delay for debugging
+    </script>
+</body>
+</html>
